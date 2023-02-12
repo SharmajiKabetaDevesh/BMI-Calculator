@@ -1,0 +1,66 @@
+package com.example.bmidevapk;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.annotation.SuppressLint;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+public class MainActivity extends AppCompatActivity {
+
+    @SuppressLint("MissingInflatedId")
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        EditText height;
+        EditText heightfeet;
+        EditText Weight;
+        Button but;
+        TextView txt;
+        LinearLayout llmain;
+
+        height =findViewById(R.id.height);
+        heightfeet =findViewById(R.id.heightfeet);
+        Weight =findViewById(R.id.Weight);
+        but = findViewById(R.id.but);
+        txt = findViewById(R.id.txt);
+        llmain =findViewById(R.id.main);
+
+
+        but.setOnClickListener(new View.OnClickListener(){
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onClick(View view) {
+                int wt = Integer.parseInt(Weight.getText().toString());
+                int ht = Integer.parseInt(height.getText().toString());
+                int htft = Integer.parseInt(heightfeet.getText().toString());
+
+                int totalinches = htft*12+ht;
+                double totalcm =totalinches*2.54;
+                double meter = totalcm/100;
+
+                double bmi = wt/(meter*meter);
+                if(bmi>25) {
+                    txt.setText("You are OverWeight" +bmi);
+                    llmain.setBackgroundColor(getResources().getColor(R.color.overweight));
+                }
+                else if (bmi<18) {
+                    txt.setText("You are UnderWeight"+bmi);
+                    llmain.setBackgroundColor(getResources().getColor(R.color.Underweight));
+                }else{
+                    txt.setText("You are Healthy"+bmi);
+                    llmain.setBackgroundColor(getResources().getColor(R.color.Healthy));
+                }
+
+            }
+        });
+
+
+
+    }
+}
